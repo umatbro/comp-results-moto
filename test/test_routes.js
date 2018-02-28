@@ -37,7 +37,7 @@ describe('Routing', () => {
         .end((err, res) => {
           let templateName = this.spy.getCall(0).args[0];
 
-          expect(templateName).to.equal('admin');
+          expect(templateName).to.equal('admin/index');
           done();
       });
     });
