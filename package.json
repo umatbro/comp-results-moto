@@ -10,19 +10,22 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
-    "chai": "^4.1.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
-    "mocha": "^5.0.1",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",
+    "request": "^2.83.0",
     "serve-favicon": "~2.4.5"
   },
   "description": "Application for managing competitors' results",
   "main": "app.js",
   "devDependencies": {
-    "eslint": "^4.18.1"
+    "chai": "^4.1.2",
+    "eslint": "^4.18.1",
+    "mocha": "^5.0.1",
+    "sinon": "^4.4.2",
+    "supertest": "^3.0.0"
   },
   "repository": {
     "type": "git",
