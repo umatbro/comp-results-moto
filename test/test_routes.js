@@ -9,7 +9,11 @@ describe('Routing', () => {
   before(done => {  // run test server
     this.app = app;
     let port = Math.floor(Math.random() * 9000) + 1000;
-    this.app.listen(port, () => done());
+    this.server = this.app.listen(port, () => done());
+  });
+
+  after(() => {
+    this.server.close();
   });
 
   describe('Rendering', () => {
