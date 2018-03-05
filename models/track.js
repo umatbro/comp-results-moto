@@ -4,8 +4,8 @@ let trackSchema = new mongoose.Schema({
     name: String,
     points: {
         type: Number,
-        get: (v) => Math.round(v),
-        set: (v) => Math.round(v),
+        get: (v) => Math.floor(v),
+        set: (v) => Math.floor(v),
         required: true,
         default: 0,
     },

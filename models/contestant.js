@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let contestantSchema = new mongoose.Schema({
-    name: String,
+    name: {type: String, required: true},
     disqualified: {
         type: Boolean,
         default: false,
@@ -17,12 +17,9 @@ let contestantSchema = new mongoose.Schema({
     },
 });
 
-contestantSchema.virtual('score').get(() => {
-    let score = 0;
-    for (let track of this.completedTracks) {
-        score += track.points;
-    }
-    return score;
+contestantSchema.virtual('score').get(function() {
+    // this.populate();
+    return this.completedTracks.reduce((acc, x) => acc + x.points, 0);
 });
 
 const Contestant = mongoose.model('Contestant', contestantSchema);
