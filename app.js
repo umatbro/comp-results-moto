@@ -5,9 +5,19 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+// database
+const mongoose = require('mongoose');
+const DEFAULT_PORT = 27017;
+const mongoDB = 'mongodb://localhost/comp-results';
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 const admin = require('./routes/admin');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -26,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
