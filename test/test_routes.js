@@ -50,14 +50,14 @@ describe('Routing', () => {
   describe('CRUD operations  (/api routes)', () => {
       beforeEach(() => {
         sinon.stub(Track, 'find');
+        sinon.stub(Track, 'findOne');
         sinon.stub(Track, 'create');
-        sinon.stub(Track.prototype, 'save');
       });
 
       afterEach(() => {
         Track.find.restore();
+        Track.findOne.restore();
         Track.create.restore();
-        Track.prototype.save.restore();
       });
 
       describe('Track routes', () => {
@@ -73,27 +73,11 @@ describe('Routing', () => {
                 .query({name: 'Test track'})
                 .expect(200)
                 .end((err, res) => {
-                    sinon.assert.calledWith(Track.find, {name: 'Test track'});
+                    sinon.assert.calledWith(Track.findOne, {name: 'Test track'});
                     done();
                 });
         });
         // TODO add handlers for track length and point score
-
-        it('should store new Track in database', (done) => {
-            let newTrack = {name: 'new track', points: 30, length: 1.25};
-            request(this.app)
-                .post('/api/tracks')
-                .send(newTrack)
-                .expect(200)
-                .end((err, res) => {
-                    sinon.assert.calledWith(Track.create, newTrack);
-                    done();
-                });
-        });
-        it('should update Track based on its name', (done) => {
-            // TODO
-            done(new Error('TODO'));
-        });
       });
 
       describe('Contestant routes', () => {

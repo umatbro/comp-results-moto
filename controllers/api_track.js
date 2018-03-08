@@ -12,3 +12,18 @@ exports.saveNewTrack = function(req, res) {
         res.status(200).send(track);
     });
 };
+
+exports.findTracks = function(req, res) {
+    let name = req.query.name;
+    if (!name) {
+        Track.find({}).exec((err, tracks) => {
+            console.log(tracks);
+            res.send(tracks);
+        });
+    }
+    Track.findOne({name: name}).exec((err, track) => {
+        if (err) res.send(`got error: ${err}`);
+        if (!track) res.status(404).json({message: 'No track with given name'});
+        else res.send(track);
+    });
+};

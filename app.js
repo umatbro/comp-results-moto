@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 
 // database
 const mongoose = require('mongoose');
-const DEFAULT_PORT = 27017;
 const mongoDB = 'mongodb://localhost/comp-results';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
