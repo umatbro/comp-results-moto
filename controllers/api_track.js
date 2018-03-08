@@ -7,9 +7,11 @@ exports.saveNewTrack = function(req, res) {
     Track.create(req.body, (err, track) => {
         if (err) {
             console.log(err);
-            res.status(500).send({message: 'Error while creating new track'});
+            res.status(500).send({
+                message: `Error while creating new track: ${err}`,
+            });
         }
-        res.status(200).send(track);
+        res.status(200).json(track);
     });
 };
 

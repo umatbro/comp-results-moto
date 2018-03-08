@@ -73,10 +73,24 @@ describe('Routing', () => {
                 .query({name: 'Test track'})
                 .expect(200)
                 .end((err, res) => {
-                    sinon.assert.calledWith(Track.findOne, {name: 'Test track'});
+                    sinon.assert
+                        .calledWith(Track.findOne, {name: 'Test track'});
                     done();
                 });
         });
+
+          it('should store new Track in database', (done) => {
+              let newTrack = {name: 'new track', points: 30, length: 1.25};
+              Track.create.yields(null, new Track(newTrack));
+              request(this.app)
+                  .post('/api/tracks')
+                  .send(newTrack)
+                  .expect(200)
+                  .end((err, res) => {
+                      sinon.assert.calledWith(Track.create, newTrack);
+                      done();
+                  });
+          });
         // TODO add handlers for track length and point score
       });
 
