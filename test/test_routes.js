@@ -84,7 +84,7 @@ describe('Routing', () => {
               Track.create.yields(null, new Track(newTrack));
 
               request(this.app)
-                  .post('/api/tracks')
+                  .post('/api/tracks/new')
                   .send(newTrack)
                   .expect(200)
                   .end((err, res) => {

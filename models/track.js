@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 let trackSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+    },
     points: {
         type: Number,
         get: (v) => Math.floor(v),
