@@ -1,4 +1,5 @@
 const Track = require('../models/track');
+const PAGE_SIZE = 1000;
 
 exports.saveNewTrack = function(req, res) {
     if (Object.keys(req.body).length === 0) {
@@ -16,16 +17,35 @@ exports.saveNewTrack = function(req, res) {
 };
 
 exports.findTracks = function(req, res) {
-    let name = req.query.name;
-    if (!name) {
-        Track.find({}).exec((err, tracks) => {
-            console.log(tracks);
-            res.send(tracks);
-        });
+    let query = req.query;
+    let page = parseInt(req.query.page);
+    delete query.page;
+    page = page ? page : 1;
+
+    // check if query is an empty object
+    if (!query) {
+        Track
+            .find({})
+            .skip((page - 1) * PAGE_SIZE)
+            .limit(PAGE_SIZE)
+            .exec()
+            .then((tracks) => {
+                res.json({page, tracks});
+            })
+            .catch((err) => {
+                res.json(err);
+            });
+    } else {
+        let q = {};
+        if (query.name) q.name = query.name;
+        if (query.id) q.id = query.id;
+        if (query.length) q.length = query.length;
+        Track.find(q).skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE).exec()
+            .then((tracks) => {
+                res.json({page, tracks});
+            })
+            .catch((err) => {
+                res.json(err);
+            });
     }
-    Track.findOne({name: name}).exec((err, track) => {
-        if (err) res.send(`got error: ${err}`);
-        if (!track) res.status(404).json({message: 'No track with given name'});
-        else res.send(track);
-    });
 };
