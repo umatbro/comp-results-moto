@@ -64,5 +64,11 @@ exports.modifyTrack = function(req, res) {
 };
 
 exports.deleteTrack = function(req, res) {
-
+    let id = req.params.id;
+    Track
+        .findById(id)
+        .remove()
+        .exec()
+        .then((result) => res.status(200).json(result))
+        .catch((err) => res.status(500).json(err));
 };
