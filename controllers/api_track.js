@@ -49,3 +49,20 @@ exports.findTracks = function(req, res) {
             });
     }
 };
+
+exports.modifyTrack = function(req, res) {
+    let id = req.params.id;
+    let newValues = req.body;
+
+    Track.findById(id, (err, track) => {
+        if (err) return res.json(err);
+        track.set(newValues);
+        track.save()
+            .then((newTrack) => res.json(newTrack))
+            .catch((err) => res.json(err));
+    });
+};
+
+exports.deleteTrack = function(req, res) {
+
+};

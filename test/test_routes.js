@@ -74,7 +74,7 @@ describe('Routing', () => {
                 .expect(200)
                 .end((err, res) => {
                     sinon.assert
-                        .calledWith(Track.findOne, {name: 'Test track'});
+                        .calledWith(Track.find, {name: 'Test track'});
                     done();
                 });
         });
@@ -82,6 +82,7 @@ describe('Routing', () => {
           it('should store new Track in database', (done) => {
               let newTrack = {name: 'new track', points: 30, length: 1.25};
               Track.create.yields(null, new Track(newTrack));
+
               request(this.app)
                   .post('/api/tracks')
                   .send(newTrack)
