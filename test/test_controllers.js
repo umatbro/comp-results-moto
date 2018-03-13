@@ -1,3 +1,4 @@
+const expect = require('chai').expect;
 const sinon = require('sinon');
 const httpMocks = require('node-mocks-http');
 const mongoose = require('mongoose');
@@ -85,15 +86,13 @@ describe('Contestant controllers', () => {
     beforeEach(() => {
         [this.res, this.req] = utils.httpMocks();
         this.execStub = sinon.stub(mongoose.Query.prototype, 'exec');
-        sinon.spy(this.res, 'json');
 
-        sinon.spy(Contestant, 'find');
         sinon.spy(Contestant, 'findById');
+        sinon.spy(Contestant, 'find');
     });
 
     afterEach(() => {
         mongoose.Query.prototype.exec.restore();
-        this.res.json.restore();
 
         Contestant.find.restore();
         Contestant.findById.restore();
@@ -104,9 +103,12 @@ describe('Contestant controllers', () => {
         this.execStub.resolves(queryResult);
 
         apiContestant.findContestants(this.req, this.res);
-
         sinon.assert.calledWith(Contestant.find, {});
+
+        // TODO
+        // sinon.spy(this.res, 'json');
         // sinon.assert.calledWith(this.res.json, queryResult);
+        // this.res.json.restore();
         done();
     });
 
@@ -117,5 +119,37 @@ describe('Contestant controllers', () => {
         apiContestant.findContestants(this.req, this.res);
         sinon.assert.calledWith(Contestant.findById, '123');
         done();
+    });
+
+    it('should query for creating new user', (done) => {
+        let newContestantSettings = {
+            name: 'new name',
+        };
+        let newContestant = new Contestant(newContestantSettings);
+        this.req.body = newContestantSettings;
+
+        sinon.stub(Contestant, 'create').resolves(newContestant);
+        apiContestant.addContestant(this.req, this.res);
+
+        sinon.assert.calledWith(Contestant.create, newContestantSettings);
+        done();
+    });
+
+    it('should modify user name', async () => {
+        let name = 'new name';
+        this.req.body.name = name;
+        let id = '123';
+        this.req.params.id = id;
+        let contestant = new Contestant({name: 'old name'});
+        let newContestant = new Contestant({name: name});
+
+        this.execStub.resolves(contestant);
+
+        sinon.stub(contestant, 'save').resolves(newContestant);
+
+        await apiContestant.modifyContestantName(this.req, this.res);
+
+        expect(Contestant.findById.calledWith(id)).to.be.true;
+        expect(contestant.save.calledOnce).to.be.true;
     });
 });
