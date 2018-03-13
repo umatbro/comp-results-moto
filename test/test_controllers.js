@@ -1,11 +1,14 @@
 const sinon = require('sinon');
 const httpMocks = require('node-mocks-http');
 const mongoose = require('mongoose');
+const utils = require('../utils');
 
 
 const Track = require('../models/track');
+const Contestant = require('../models/contestant');
 
 const apiTrack = require('../controllers/api_track');
+const apiContestant = require('../controllers/api_contestants');
 
 describe('Track controllers', () => {
     beforeEach(() => {
@@ -15,8 +18,7 @@ describe('Track controllers', () => {
         findStub.returns(new mongoose.Query());
         Track.prototype.find = sinon.spy();
 
-        this.req = httpMocks.createRequest();
-        this.res = httpMocks.createResponse();
+        [this.res, this.req] = utils.httpMocks();
     });
     afterEach(() => {
         Track.create.restore();
@@ -79,5 +81,41 @@ describe('Track controllers', () => {
     it('should delete queried track');
 });
 
+describe('Contestant controllers', () => {
+    beforeEach(() => {
+        [this.res, this.req] = utils.httpMocks();
+        this.execStub = sinon.stub(mongoose.Query.prototype, 'exec');
+        sinon.spy(this.res, 'json');
 
-// TODO 1: 'should update track based on its name
+        sinon.spy(Contestant, 'find');
+        sinon.spy(Contestant, 'findById');
+    });
+
+    afterEach(() => {
+        mongoose.Query.prototype.exec.restore();
+        this.res.json.restore();
+
+        Contestant.find.restore();
+        Contestant.findById.restore();
+    });
+
+    it('should list all users if no id in query', (done) => {
+        let queryResult = [{user1: 'user 1'}, {user2: 'user 2'}];
+        this.execStub.resolves(queryResult);
+
+        apiContestant.findContestants(this.req, this.res);
+
+        sinon.assert.calledWith(Contestant.find, {});
+        // sinon.assert.calledWith(this.res.json, queryResult);
+        done();
+    });
+
+    it('should query user of given id', (done) => {
+        this.execStub.resolves({user: 'user 1'});
+        this.req.query = {id: '123'};
+
+        apiContestant.findContestants(this.req, this.res);
+        sinon.assert.calledWith(Contestant.findById, '123');
+        done();
+    });
+});

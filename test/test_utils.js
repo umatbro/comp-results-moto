@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const loadUsers = require('../utils/load_users')''
+const loadUsers = require('../utils')
 
 describe('Load users utility', () => {
 
