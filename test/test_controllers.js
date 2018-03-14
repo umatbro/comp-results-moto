@@ -103,7 +103,7 @@ describe('Contestant controllers', () => {
         this.execStub.resolves(queryResult);
 
         apiContestant.findContestants(this.req, this.res);
-        sinon.assert.calledWith(Contestant.find, {});
+        sinon.assert.calledWith(Contestant.find, {disqualified: false});
 
         // TODO
         // sinon.spy(this.res, 'json');

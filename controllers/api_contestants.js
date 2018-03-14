@@ -9,6 +9,7 @@ exports.findContestants = function(req, res) {
             .catch((err) => res.json(err));
     }
     // if no id in query - list all (or everything that was queried
+    if (!req.query.disqualified) req.query.disqualified = false;
     Contestant.find(req.query)
         .exec()
         .then((contestants) => res.json(contestants))
@@ -18,8 +19,9 @@ exports.findContestants = function(req, res) {
 /**
  * Create new user.
  *
- * @param req Request body should contain new user name under `name` key
- * @param res
+ * @param {Object} req Request body should contain
+ * new user name under `name` key
+ * @param {Object} res
  */
 exports.addContestant = function(req, res) {
     Contestant.create(req.body)
@@ -62,8 +64,9 @@ exports.modifyContestantName = function(req, res) {
  */
 exports.disqualifyUser = function(req, res) {
     const id = req.params.id;
-    const isDisqualified =
-      (!req.body.disqualified || req.body.disqualified === 'true') ? true : false;
+    const isDisqualified = // no body or set `disqualified` explicitly in body
+        (!req.body.disqualified || req.body.disqualified === 'true');
+
       if (isDisqualified) {
         Contestant.findByIdAndUpdate(id, {disqualified: true}).exec()
           .then((updatedContestant) => res.json(updatedContestant))
