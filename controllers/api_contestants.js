@@ -49,3 +49,25 @@ exports.modifyContestantName = function(req, res) {
         })
         .catch((err) => res.json(err));
 };
+
+/**
+ * Disqualify or un-disqualify user.
+ * Usage:
+ * PUT disqualified='true' /api/contestant/:id/disqualify
+ *
+ * @param {Object} req should contain params with id and:
+      * no body (user will be disqualified)
+      * 'disqualify=false' in body to set disqualified on false
+ * @param {Object} res
+ */
+exports.disqualifyUser = function(req, res) {
+    const id = req.params.id;
+    const isDisqualified =
+      (!req.body.disqualified || req.body.disqualified === 'true') ? true : false;
+      if (isDisqualified) {
+        Contestant.findByIdAndUpdate(id, {disqualified: true}).exec()
+          .then((updatedContestant) => res.json(updatedContestant))
+          .catch((err) => res.json(err));
+      }
+      // TODO handle un-disqualify
+};

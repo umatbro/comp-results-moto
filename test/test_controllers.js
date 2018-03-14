@@ -152,4 +152,22 @@ describe('Contestant controllers', () => {
         expect(Contestant.findById.calledWith(id)).to.be.true;
         expect(contestant.save.calledOnce).to.be.true;
     });
+
+    it('should disqualify user', async () => {
+      let id = '123';
+      this.req.params.id = id;
+
+      sinon.spy(Contestant, 'findByIdAndUpdate');
+      this.execStub.resolves(new Contestant({name: 'new', disqualified: true}));
+
+      await apiContestant.disqualifyUser(this.req, this.res);
+
+      expect(Contestant
+        .findByIdAndUpdate
+        .calledWithExactly(id, {disqualified: true}))
+        .to.be.true;
+      Contestant.findByIdAndUpdate.restore();
+    });
+
+    it('should remove disqualified status from disqualified user');
 });
