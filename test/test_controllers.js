@@ -202,7 +202,7 @@ describe('Contestant controller', () => {
         let userId = '123';
         let trackId = '5a9f14f18e04b3225953954c';
         let contestant = new Contestant({
-            name: 'new',
+            name: 'new user',
             completedTracks: [],
         });
 
@@ -210,9 +210,11 @@ describe('Contestant controller', () => {
         this.req.params.id = userId;
         this.req.body.track_id = trackId;
         sinon.spy(contestant.completedTracks, 'push');
+        sinon.stub(contestant, 'save');
 
         await apiContestant.completedTrack(this.req, this.res);
 
         sinon.assert.calledWith(contestant.completedTracks.push, trackId);
+        sinon.assert.calledOnce(contestant.save);
     });
 });
