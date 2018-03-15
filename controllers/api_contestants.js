@@ -1,20 +1,22 @@
 const Contestant = require('../models/contestant');
 
-exports.findContestants = function(req, res) {
+exports.findContestants = async function(req, res) {
     let contestantId = req.query.id;
     if (contestantId) {
-        Contestant
-            .findById(contestantId).exec()
-            .then((contestant) => res.json(contestant))
-            .catch((err) => res.json(err));
+        try {
+            let contestant = await Contestant.findById(contestantId).populate('completedTracks').exec();
+            return res.json(contestant);
+        } catch (err) {
+            return res.status(404).json(err);
+        }
     }
-    // TODO change to async
     // if no id in query - list all (or everything that was queried
     if (!req.query.disqualified) req.query.disqualified = false;
-    Contestant.find(req.query)
-        .exec()
-        .then((contestants) => res.json(contestants))
-        .catch((err) => res.json(err));
+    try {
+        return res.json(await Contestant.find(req.query).exec());
+    } catch (err) {
+        return res.status(500).json(err);
+    }
 };
 
 /**
