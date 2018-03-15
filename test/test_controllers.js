@@ -169,5 +169,19 @@ describe('Contestant controllers', () => {
       Contestant.findByIdAndUpdate.restore();
     });
 
-    it('should remove disqualified status from disqualified user');
+    it('should remove disqualified status from disqualified user', async () => {
+      let id = '123';
+      this.req.params.id = id;
+      this.req.body.disqualified = 'false';
+
+      sinon.spy(Contestant, 'findByIdAndUpdate');
+      this.execStub.resolves(new Contestant({name: 'new', disqualified: false}));
+
+      await apiContestant.disqualifyUser(this.req, this.res);
+
+      sinon.assert.calledWithExactly(
+        Contestant.findByIdAndUpdate,
+        id, {disqualified: false}
+      );
+    });
 });

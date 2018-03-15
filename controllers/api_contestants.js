@@ -64,13 +64,15 @@ exports.modifyContestantName = function(req, res) {
  */
 exports.disqualifyUser = function(req, res) {
     const id = req.params.id;
-    const isDisqualified = // no body or set `disqualified` explicitly in body
+    const shouldBeDisqualified = // no body or set `disqualified` explicitly in body
         (!req.body.disqualified || req.body.disqualified === 'true');
 
-      if (isDisqualified) {
+      if (shouldBeDisqualified) {
         Contestant.findByIdAndUpdate(id, {disqualified: true}).exec()
           .then((updatedContestant) => res.json(updatedContestant))
           .catch((err) => res.json(err));
       }
-      // TODO handle un-disqualify
+      Contestant.findByIdAndUpdate(id, {disqualified: false}).exec()
+        .then((updatedContestant) => res.json(updatedContestant))
+        .catch((err) => res.json(err));
 };
