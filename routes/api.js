@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Track = require('../models/track');
 const apiTrack = require('../controllers/api_track');
 const apiContestant = require('../controllers/api_contestants');
 
@@ -14,6 +13,6 @@ router.get('/users', apiContestant.findContestants);
 router.put('/user/:id/name', apiContestant.modifyContestantName);
 router.put('/user/:id/disqualify', apiContestant.disqualifyUser);
 router.delete('/user/:id/delete', apiContestant.deleteUser);
-router.put('/user/:id/add-track/:track_id', apiContestant.completedTrack);
+router.put('/user/:id/add-track', apiContestant.completedTrack);
 
 module.exports = router;

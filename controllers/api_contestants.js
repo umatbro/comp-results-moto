@@ -100,14 +100,14 @@ exports.deleteUser = function(req, res) {
 /**
  * Add completed track to user
  * Usage:
- * PUT /api/contestant/:id/add-track/:track_id
+ * PUT /api/contestant/:id/add-track
  *
  * @param {Object} req should contain params with user id and added track id
  * @param {Object} res
  */
 exports.completedTrack = async function(req, res) {
     let userId = req.params.id;
-    let trackId = req.params.track_id;
+    let trackId = req.body.track_id;
 
     let contestant;
     try {

@@ -208,7 +208,7 @@ describe('Contestant controller', () => {
 
         this.execStub.resolves(contestant);
         this.req.params.id = userId;
-        this.req.params.track_id = trackId;
+        this.req.body.track_id = trackId;
         sinon.spy(contestant.completedTracks, 'push');
 
         await apiContestant.completedTrack(this.req, this.res);
