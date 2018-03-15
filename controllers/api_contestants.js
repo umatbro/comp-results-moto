@@ -91,3 +91,19 @@ exports.deleteUser = function(req, res) {
     .then((removedContestant) => res.json(removedContestant))
     .catch((err) => res.json(err));
 };
+
+/**
+ * Add completed track to user
+ * Usage:
+ * PUT /api/contestant/:id/add-track/:track_id
+ *
+ * @param {Object} req should contain params with user id and added track id
+ * @param {Object} res
+ */
+exports.completedTrack = function(req, res) {
+
+}
+
+exports.removeCompletedTrack = function(req, res) {
+
+}
