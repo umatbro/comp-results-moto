@@ -197,4 +197,22 @@ describe('Contestant controller', () => {
       sinon.assert.calledWithExactly(Contestant.findByIdAndRemove, id);
       Contestant.findByIdAndRemove.restore();
     });
+
+    it('should assign completed track to the user', async () => {
+        let userId = '123';
+        let trackId = '5a9f14f18e04b3225953954c';
+        let contestant = new Contestant({
+            name: 'new',
+            completedTracks: [],
+        });
+
+        this.execStub.resolves(contestant);
+        this.req.params.id = userId;
+        this.req.params.track_id = trackId;
+        sinon.spy(contestant.completedTracks, 'push');
+
+        await apiContestant.completedTrack(this.req, this.res);
+
+        sinon.assert.calledWith(contestant.completedTracks.push, trackId);
+    });
 });

@@ -8,6 +8,7 @@ exports.findContestants = function(req, res) {
             .then((contestant) => res.json(contestant))
             .catch((err) => res.json(err));
     }
+    // TODO change to async
     // if no id in query - list all (or everything that was queried
     if (!req.query.disqualified) req.query.disqualified = false;
     Contestant.find(req.query)
@@ -104,10 +105,25 @@ exports.deleteUser = function(req, res) {
  * @param {Object} req should contain params with user id and added track id
  * @param {Object} res
  */
-exports.completedTrack = function(req, res) {
+exports.completedTrack = async function(req, res) {
+    let userId = req.params.id;
+    let trackId = req.params.track_id;
 
-}
+    let contestant;
+    try {
+        contestant = await Contestant.findById(userId);
+    } catch (err) {
+        return res.status(404).json(err);
+    }
+
+    contestant.completedTracks.push(trackId);
+    try {
+        return res.json(await contestant.save());
+    } catch (err) {
+        return res.json(err);
+    }
+};
 
 exports.removeCompletedTrack = function(req, res) {
 
-}
+};
