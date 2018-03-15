@@ -62,18 +62,22 @@ exports.modifyContestantName = function(req, res) {
       * 'disqualify=false' in body to set disqualified on false
  * @param {Object} res
  */
-exports.disqualifyUser = function(req, res) {
+exports.disqualifyUser = async function(req, res) {
     const id = req.params.id;
     const shouldBeDisqualified = // no body or set `disqualified` explicitly in body
         (!req.body.disqualified || req.body.disqualified === 'true');
 
       if (shouldBeDisqualified) {
-        Contestant.findByIdAndUpdate(id, {disqualified: true}).exec()
-          .then((updatedContestant) => res.json(updatedContestant))
-          .catch((err) => res.json(err));
+        try {
+          let foundContestant = await Contestant
+            .findByIdAndUpdate(id, {disqualified: true}).exec();
+          return res.json(foundContestant);
+        } catch (err) {
+          return res.json(err);
+        }
       }
       Contestant.findByIdAndUpdate(id, {disqualified: false}).exec()
-        .then((updatedContestant) => res.json(updatedContestant))
+        .then((foundContestant) => res.json(foundContestant))
         .catch((err) => res.json(err));
 };
 
