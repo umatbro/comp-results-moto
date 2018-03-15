@@ -76,3 +76,18 @@ exports.disqualifyUser = function(req, res) {
         .then((updatedContestant) => res.json(updatedContestant))
         .catch((err) => res.json(err));
 };
+
+/**
+ * Delete user from database
+ * Usage:
+ * DELETE /api/contestant/:id/delete
+ *
+ * @param {Object} req should contain params with id
+ * @param {Object} res
+ */
+exports.deleteUser = function(req, res) {
+  let id = req.params.id;
+  Contestant.findByIdAndRemove(id).exec()
+    .then((removedContestant) => res.json(removedContestant))
+    .catch((err) => res.json(err));
+};

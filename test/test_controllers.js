@@ -11,7 +11,7 @@ const Contestant = require('../models/contestant');
 const apiTrack = require('../controllers/api_track');
 const apiContestant = require('../controllers/api_contestants');
 
-describe('Track controllers', () => {
+describe('Track controller', () => {
     beforeEach(() => {
         sinon.stub(Track, 'create');
         sinon.stub(Track.prototype, 'save');
@@ -82,7 +82,7 @@ describe('Track controllers', () => {
     it('should delete queried track');
 });
 
-describe('Contestant controllers', () => {
+describe('Contestant controller', () => {
     beforeEach(() => {
         [this.res, this.req] = utils.httpMocks();
         this.execStub = sinon.stub(mongoose.Query.prototype, 'exec');
@@ -183,5 +183,18 @@ describe('Contestant controllers', () => {
         Contestant.findByIdAndUpdate,
         id, {disqualified: false}
       );
+    });
+
+    it('should delete user from database', async () => {
+      let id = '123';
+      this.req.params.id = id;
+      this.execStub.resolves(new Contestant({name: 'deleted user'}));
+
+      sinon.spy(Contestant, 'findByIdAndRemove');
+
+      await apiContestant.deleteUser(this.req, this.res);
+
+      sinon.assert.calledWithExactly(Contestant.findByIdAndRemove, id);
+      Contestant.findByIdAndRemove.restore();
     });
 });
