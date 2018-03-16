@@ -13,7 +13,21 @@ exports.findContestants = async function(req, res) {
     // if no id in query - list all (or everything that was queried
     if (!req.query.disqualified) req.query.disqualified = false;
     try {
-        return res.json(await Contestant.find(req.query).exec());
+        return res.json(await Contestant.aggregate([
+                {"$lookup":{
+                        "from": "tracks", // name of the foreign collection
+                        "localField": "completedTracks",
+                        "foreignField": "_id",
+                        "as": "contestants"
+                    }},
+                {"$addFields":{
+                        "score":{
+                            "$sum":"$contestants.points"
+                        }
+                    }},
+                {"$project":{"contestants":0}}
+            ])
+            .exec());
     } catch (err) {
         return res.status(500).json(err);
     }
