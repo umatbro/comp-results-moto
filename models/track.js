@@ -22,20 +22,13 @@ let trackSchema = new mongoose.Schema({
 });
 
 if (!trackSchema.options.toJSON) trackSchema.options.toJSON = {};
+// exclude _id (it will be included as id in virtual) and __v
 trackSchema.options.toJSON.hide = '_id __v';
 trackSchema.options.toJSON.transform = function(doc, ret, options) {
-  if (options.hide) {
-    options.hide.split(' ').forEach((property) => {
-      delete ret[property];
-    });
-  }
-  if (this.hide) {
-    this.hide.split(' ').forEach((property) => {
-      delete ret[property];
-    });
-  }
-
-  return ret;
+    if (options.hide) {
+        options.hide.split(' ').forEach((property) => delete ret[property]);
+    }
+    return ret;
 };
 trackSchema.options.toJSON.virtuals = true;
 

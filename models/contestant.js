@@ -18,7 +18,6 @@ let contestantSchema = new mongoose.Schema({
 });
 
 contestantSchema.virtual('score').get(function() {
-    // this.populate();
     return this.completedTracks.reduce((acc, x) => acc + x.points, 0);
 });
 
