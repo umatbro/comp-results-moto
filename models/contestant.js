@@ -18,8 +18,22 @@ let contestantSchema = new mongoose.Schema({
 });
 
 contestantSchema.virtual('score').get(function() {
-    return this.completedTracks.reduce((acc, x) => acc + x.points, 0);
+    return this.completedTracks.reduce((acc, doc) => acc + doc.points, 0);
 });
+
+if (!contestantSchema.options.toJSON) contestantSchema.options.toJSON = {};
+contestantSchema.options.toJSON.virtuals = true;
+
+contestantSchema.options.toJSON.__hide = '_id __v disqualified';
+contestantSchema.options.toJSON.transform = function(doc, ret, options) {
+    if (options.hide) {
+        options.hide.split(' ').forEach((property) => delete ret[property]);
+    }
+    if (options.__hide) {
+        options.__hide.split(' ').forEach((property) => delete ret[property]);
+    }
+    return ret;
+};
 
 const Contestant = mongoose.model('Contestant', contestantSchema);
 
