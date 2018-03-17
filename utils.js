@@ -60,9 +60,53 @@ function generateRandomTracks(dbURI, numOfTracks=30) {
         .then(() => mongoose.connection.close());
 }
 
+/**
+ * Assign random number of tracks completed to each Contestant.
+ *
+ * @param dbURI
+ * @param maxTracksAssigned - up to this many new tracks will be assigned
+ * @returns {Promise<*>} array containing updated documents.
+ */
+async function randomlyAssignCompletedTracks(dbURI, maxTracksAssigned=10) {
+    ++maxTracksAssigned;
+    mongoose.connect(dbURI);
+    let allUsers;
+    try {
+        allUsers = await Contestant.find({disqualified: false}).exec();
+    } catch (err) {
+        throw err;
+    }
+    let updatedDocs;
+    try {
+        updatedDocs = await Promise.all(allUsers.map(async (user) => {
+            let query = Track.aggregate([
+                {'$sample': {size: Math.floor(Math.random() * maxTracksAssigned)}},
+                {'$project': {'_id': 0, 'id': '$_id'}}
+            ]);
+            let tracksIds;
+            try {
+                tracksIds = await query.exec();
+            } catch (err) {
+                throw err;
+            }
+            tracksIds.forEach((track) => {
+                user.completedTracks.push(track.id);
+            });
+            return await user.save();
+        }));
+    } catch (err) {
+        throw(err);
+    } finally {
+        mongoose.connection.close();
+    }
+
+    return updatedDocs;
+}
+
 module.exports = {
     generateRandomUsers: loadRandomUsers,
     generateRandomTracks: generateRandomTracks,
+    assignTracks: randomlyAssignCompletedTracks,
 };
 
 if (!module.parent) {
