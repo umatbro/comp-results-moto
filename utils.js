@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const httpMocks = require('node-mocks-http');
 const ArgumentParser = require('argparse').ArgumentParser;
 const fetch = require('node-fetch');
 
@@ -61,22 +60,7 @@ function generateRandomTracks(dbURI, numOfTracks=30) {
         .then(() => mongoose.connection.close());
 }
 
-/**
- * Create request and response mocks using ``node-mocks-http`` library
- *
- * @param {Object} responseOptions
- * @param {Object} requestOptions
- * @return {*[]} response and request mocks
- */
-function httpResReqMocks(responseOptions={}, requestOptions={}) {
-    return [
-        httpMocks.createResponse(responseOptions),
-        httpMocks.createRequest(requestOptions),
-    ];
-}
-
 module.exports = {
-    httpMocks: httpResReqMocks,
     generateRandomUsers: loadRandomUsers,
     generateRandomTracks: generateRandomTracks,
 };

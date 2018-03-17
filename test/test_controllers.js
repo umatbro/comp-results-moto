@@ -19,7 +19,9 @@ describe('Track controller', () => {
         findStub.returns(new mongoose.Query());
         Track.prototype.find = sinon.spy();
 
-        [this.res, this.req] = utils.httpMocks();
+        let {req, res} = httpMocks.createMocks();
+        this.req = req;
+        this.res = res;
     });
     afterEach(() => {
         Track.create.restore();
@@ -84,7 +86,10 @@ describe('Track controller', () => {
 
 describe('Contestant controller', () => {
     beforeEach(() => {
-        [this.res, this.req] = utils.httpMocks();
+        let {req, res} = httpMocks.createMocks();
+        this.req = req;
+        this.res = res;
+
         this.execStub = sinon.stub(mongoose.Query.prototype, 'exec');
 
         sinon.spy(Contestant, 'findById');
