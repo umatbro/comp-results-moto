@@ -1,5 +1,14 @@
+const mongoose = require('mongoose');
 const httpMocks = require('node-mocks-http');
 const ArgumentParser = require('argparse').ArgumentParser;
+const fetch = require('node-fetch');
+
+const Track = require('./models/track');
+const Contestant = require('./models/contestant');
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 commandDescription =
 `This command will store 100 random users in your database using https://randomuser.me/ API.
@@ -12,8 +21,21 @@ const parser = new ArgumentParser({
   description: commandDescription,
 });
 
-function getRandomUsers(...args) {
-
+function loadRandomUsers(dbURI, numOfUsers=100) {
+    mongoose.connect(dbURI);
+    fetch('https://randomuser.me/api/?results=' + numOfUsers)
+        .then((res) => res.json())
+        .then((response) => Promise.all(
+            response.results.map((user) => {
+                let name = user.name;
+                return Contestant.create({
+                    name: name.first.capitalize() +' '+ name.last.capitalize(),
+                });
+            })
+        ))
+        .then((res) => console.log('Number of records:', res.length))
+        .catch((err) => console.log(err))
+        .then(() => mongoose.connection.close());
 }
 
 /**
@@ -31,7 +53,8 @@ function httpResReqMocks(responseOptions={}, requestOptions={}) {
 }
 
 module.exports = {
-  httpMocks: httpResReqMocks,
+    httpMocks: httpResReqMocks,
+    generateRandomUsers: loadRandomUsers,
 };
 
 if (!module.parent) {
