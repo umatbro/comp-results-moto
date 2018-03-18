@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5aaee166ce191527cc668f82"},"name":"Asta Larsen","disqualified":false,"completedTracks":[{"$oid":"5aaed9482ab3da209c4e6adb"},{"$oid":"5aaed9482ab3da209c4e6ada"},{"$oid":"5aaed9482ab3da209c4e6add"}],"__v":1}
+{"_id":{"$oid":"5aaee166ce191527cc668f83"},"name":"Quinn Johnson","disqualified":false,"completedTracks":[{"$oid":"5aaed9482ab3da209c4e6ad9"},{"$oid":"5aaed9482ab3da209c4e6add"}],"__v":1}
+{"_id":{"$oid":"5aaee166ce191527cc668f84"},"name":"Ben Holt","disqualified":false,"completedTracks":[{"$oid":"5aaed9482ab3da209c4e6ada"}],"__v":1}
+{"_id":{"$oid":"5aaee166ce191527cc668f85"},"name":"Vincent Gill","disqualified":false,"completedTracks":[],"__v":0}
+{"_id":{"$oid":"5aaee166ce191527cc668f86"},"name":"Jane Ortiz","disqualified":true,"completedTracks":[{"$oid":"5aaed9482ab3da209c4e6add"},{"$oid":"5aaed9482ab3da209c4e6adb"},{"$oid":"5aaed9482ab3da209c4e6ad9"},{"$oid":"5aaed9482ab3da209c4e6ada"}],"__v":1}

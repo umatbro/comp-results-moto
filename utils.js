@@ -1,3 +1,7 @@
+const fs = require('fs');
+const path = require('path');
+const {execSync} = require('child_process');
+
 const mongoose = require('mongoose');
 const ArgumentParser = require('argparse').ArgumentParser;
 const fetch = require('node-fetch');
@@ -103,10 +107,42 @@ async function randomlyAssignCompletedTracks(dbURI, maxTracksAssigned=10) {
     return updatedDocs;
 }
 
+async function clearDb(dbUri) {
+    mongoose.connect(dbUri);
+    await Track.remove({}).exec();
+    await Contestant.remove({}).exec();
+
+    mongoose.connection.close();
+    return true;
+}
+
+/**
+ * Dump data from database.
+ *
+ * @param cfgFile contains info like db host, username, etc.
+ * @param outDir output dir, 2 output files in json format
+ */
+function dumpData(cfgFile, outDir) {
+    let {host, port, name, user, password} = JSON.parse(fs.readFileSync(cfgFile));
+    console.log('Run commands: ');
+    console.log(`mongoexport --host ${host}:${port} --username ${user} --password ${password} --db ${name} --collection contestants --type=json --out ${outDir}/contestants.json`);
+    console.log(`mongoexport --host ${host}:${port} --username ${user} --password ${password} --db ${name} --collection tracks --type=json --out ${outDir}/tracks.json`);
+}
+
+function exportData(cfgFile, dir) {
+    let {host, port, name, user, password} = JSON.parse(fs.readFileSync(cfgFile));
+    let uri = `mongodb://${user}:${password}@${host}:${port}/${name}`;
+    console.log(`mongoimport --uri ${uri} --file ${dir}/contestants.json --collection contestants`);
+    console.log(`mongoimport --uri ${uri} --file ${dir}/tracks.json --collection tracks`);
+}
+
 module.exports = {
     generateRandomUsers: loadRandomUsers,
     generateRandomTracks: generateRandomTracks,
     assignTracks: randomlyAssignCompletedTracks,
+    clearDb: clearDb,
+    dumpData: dumpData,
+    exportData: exportData,
 };
 
 if (!module.parent) {

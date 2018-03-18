@@ -1,0 +1,5 @@
+{"_id":{"$oid":"5aaed9482ab3da209c4e6ad9"},"name":"Wakefield","length":4780,"points":41,"dateAdded":{"$date":"2018-03-18T21:25:28.368Z"},"__v":0}
+{"_id":{"$oid":"5aaed9482ab3da209c4e6ada"},"name":"Ooststellingwerf","length":3290,"points":40,"dateAdded":{"$date":"2018-03-18T21:25:28.371Z"},"__v":0}
+{"_id":{"$oid":"5aaed9482ab3da209c4e6adb"},"name":"Mackay","length":5266,"points":77,"dateAdded":{"$date":"2018-03-18T21:25:28.372Z"},"__v":0}
+{"_id":{"$oid":"5aaed9482ab3da209c4e6adc"},"name":"Albany","length":7140,"points":102,"dateAdded":{"$date":"2018-03-18T21:25:28.372Z"},"__v":0}
+{"_id":{"$oid":"5aaed9482ab3da209c4e6add"},"name":"Neuburg-schrobenhausen","length":7014,"points":91,"dateAdded":{"$date":"2018-03-18T21:25:28.372Z"},"__v":0}
