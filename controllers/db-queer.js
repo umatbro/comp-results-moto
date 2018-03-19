@@ -11,8 +11,28 @@ function getRanking() {
   return null;
 }
 
+async function getAllUsers(cb) {
+  return Contestant.aggregate([
+    {'$match': {disqualified: false}},
+    {'$lookup': {
+      'from': 'tracks', // name of foreign collection
+      'localField': 'completedTracks',
+      'foreignField': '_id',
+      'as': 'tracks'
+    }},
+    {
+      '$addFields': {
+        'id': '$_id',
+        'score': {'$sum': '$tracks.points'}
+      }
+    },
+    {'$project': {tracks: 0, _id: 0, __v: 0, disqualified: 0}}
+  ]).exec();
+}
+
 
 module.exports = {
     getTrackNames,
     getRanking,
+    getAllUsers,
 };
