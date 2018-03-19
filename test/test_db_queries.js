@@ -14,7 +14,6 @@ describe('Database queries', () => {
             'utf-8')
         );
         let dbUri = `mongodb://${user}:${password}@${host}:${port}/${name}`;
-        console.log(dbUri);
         mongoose.connect(dbUri);
     });
 
