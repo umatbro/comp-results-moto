@@ -103,7 +103,7 @@ describe('Contestant controller', () => {
         Contestant.findById.restore();
     });
 
-    it('should list all users if no id in query', (done) => {
+    xit('should list all users if no id in query', (done) => {
         let queryResult = [{user1: 'user 1'}, {user2: 'user 2'}];
         this.execStub.resolves(queryResult);
 
