@@ -8,7 +8,37 @@ function getTrackNames(cb) {
 }
 
 function getRanking() {
-  return null;
+  return Contestant.aggregate([
+      {
+          $match: {disqualified: false}
+      },
+      {
+          $lookup: {
+              from: 'tracks',
+              localField: 'completedTracks',
+              foreignField: '_id',
+              as: 'tracks',
+          }
+      },
+      {
+          $addFields: {
+              id: '$_id',
+              score: {$sum: '$tracks.points'}
+          }
+      },
+      {
+          $sort: {score: -1}
+      },
+      {
+          $project: {
+              tracks: 0,
+              _id: 0,
+              __v: 0,
+              disqualified: 0,
+              completedTracks: 0,
+          }
+      }
+  ]).exec();
 }
 
 async function getAllUsers(cb) {

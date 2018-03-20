@@ -10,6 +10,7 @@ router.delete('/tracks/:id/delete', apiTrack.deleteTrack);
 
 router.post('/user/new', apiContestant.addContestant);
 router.get('/users', apiContestant.findContestants);
+router.get('/users/ranking', apiContestant.userRanking);
 router.put('/user/:id/name', apiContestant.modifyContestantName);
 router.put('/user/:id/disqualify', apiContestant.disqualifyUser);
 router.delete('/user/:id/delete', apiContestant.deleteUser);

@@ -130,3 +130,17 @@ exports.completedTrack = async function(req, res) {
 exports.removeCompletedTrack = function(req, res) {
 
 };
+
+/**
+ * Get full ranking of all contestants
+ * Usage:
+ * GET /api/users/ranking
+ *
+ * @param {Object} req should contain params with user id and added track id
+ * @param {Object} res
+ */
+exports.userRanking = function(req, res) {
+    q.getRanking()
+        .then((ranking) => res.json(ranking))
+        .catch((err) => res.json(err));
+};
