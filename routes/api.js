@@ -8,12 +8,12 @@ router.get('/tracks', apiTrack.findTracks);
 router.put('/tracks/:id/modify', apiTrack.modifyTrack);
 router.delete('/tracks/:id/delete', apiTrack.deleteTrack);
 
-router.post('/user/new', apiContestant.addContestant);
-router.get('/users/:id?', apiContestant.findContestants);
+router.post('/users', apiContestant.addContestant);
 router.get('/users/ranking', apiContestant.userRanking);
-router.put('/user/:id/name', apiContestant.modifyContestantName);
-router.put('/user/:id/disqualify', apiContestant.disqualifyUser);
-router.delete('/user/:id/delete', apiContestant.deleteUser);
-router.put('/user/:id/add-track', apiContestant.completedTrack);
+router.get('/users/:id?', apiContestant.findContestants);
+router.put('/users/:id/name', apiContestant.modifyContestantName);
+router.put('/users/:id/disqualify', apiContestant.disqualifyUser);
+router.delete('/users/:id/delete', apiContestant.deleteUser);
+router.put('/users/:id/add-track', apiContestant.completedTrack);
 
 module.exports = router;
