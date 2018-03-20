@@ -24,7 +24,7 @@ contestantSchema.virtual('score').get(function() {
 if (!contestantSchema.options.toJSON) contestantSchema.options.toJSON = {};
 contestantSchema.options.toJSON.virtuals = true;
 
-contestantSchema.options.toJSON.__hide = '_id __v disqualified';
+contestantSchema.options.toJSON.__hide = '_id __v';
 contestantSchema.options.toJSON.transform = function(doc, ret, options) {
     if (options.hide) {
         options.hide.split(' ').forEach((property) => delete ret[property]);
