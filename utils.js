@@ -1,9 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const {execSync} = require('child_process');
 
 const mongoose = require('mongoose');
-const ArgumentParser = require('argparse').ArgumentParser;
 const fetch = require('node-fetch');
 
 const Track = require('./models/track');

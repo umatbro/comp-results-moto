@@ -7,13 +7,14 @@ const ObjectID = require('mongodb').ObjectID;
 
 const Contestant = require('../models/contestant');
 const q = require('../controllers/db-queer');
+const settings = require('../settings');
+const utils = require('../utils');
 
 describe('Database queries', () => {
     before(() => {
-        let {name, host, port, user, password} = JSON.parse(fs.readFileSync(
-            path.join(__dirname, '..', 'config', 'test_db_config.json'), 'utf-8')
-        );
-        let dbUri = `mongodb://${user}:${password}@${host}:${port}/${name}`;
+        let dbUri = utils.constructMongoUri(JSON.parse(fs.readFileSync(
+            path.join(settings.CONFIG_DIR, 'test_db_config.json'), 'utf-8')
+        ));
         mongoose.connect(dbUri);
     });
 

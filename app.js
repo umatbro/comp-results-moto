@@ -5,9 +5,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const utils = require('./utils');
+
 // database
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb://localhost/comp-results';
+const mongoDB = utils.getProjectMongoUri();
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

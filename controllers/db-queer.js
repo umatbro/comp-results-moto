@@ -1,13 +1,13 @@
 const Contestant = require('../models/contestant');
 const Track = require('../models/track');
 
-function getTrackNames(cb) {
+function getTrackNames(callback) {
   return Track.aggregate([
       {'$project': {name: 1, _id: 0}},
-  ]).exec(cb);
+  ]).exec(callback);
 }
 
-function getRanking() {
+function getRanking(callback) {
   return Contestant.aggregate([
       {
           $match: {disqualified: false}
@@ -38,10 +38,10 @@ function getRanking() {
               completedTracks: 0,
           }
       }
-  ]).exec();
+  ]).exec(callback);
 }
 
-async function getAllUsers(cb) {
+async function getAllUsers(callback) {
   return Contestant.aggregate([
     {'$match': {disqualified: false}},
     {'$lookup': {
@@ -57,7 +57,7 @@ async function getAllUsers(cb) {
       }
     },
     {'$project': {tracks: 0, _id: 0, __v: 0, disqualified: 0}}
-  ]).exec();
+  ]).exec(callback);
 }
 
 
