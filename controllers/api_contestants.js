@@ -2,7 +2,7 @@ const Contestant = require('../models/contestant');
 const q = require('./db-queer');
 
 exports.findContestants = async function(req, res) {
-    let contestantId = req.query.id;
+    let contestantId = req.params.id;
     if (contestantId) {
         try {
             let contestant = await Contestant.findById(contestantId).populate('completedTracks').exec();

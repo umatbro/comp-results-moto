@@ -119,7 +119,7 @@ describe('Contestant controller', () => {
 
     it('should query user of given id', (done) => {
         this.execStub.resolves({user: 'user 1'});
-        this.req.query = {id: '123'};
+        this.req.params = {id: '123'};
 
         apiContestant.findContestants(this.req, this.res);
         sinon.assert.calledWith(Contestant.findById, '123');
