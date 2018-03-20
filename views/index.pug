@@ -2,4 +2,15 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  table#ranking
+    thead
+      tr
+        th Rank
+        th Name
+        th Points
+    each entry, index in ranking
+      tr
+        td= index+1
+        td= entry.name
+        td= entry.score
