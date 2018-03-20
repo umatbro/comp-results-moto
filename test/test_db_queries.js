@@ -11,8 +11,7 @@ const q = require('../controllers/db-queer');
 describe('Database queries', () => {
     before(() => {
         let {name, host, port, user, password} = JSON.parse(fs.readFileSync(
-            path.join(__dirname, 'test_resources', 'test_db_config.json'),
-            'utf-8')
+            path.join(__dirname, '..', 'config', 'test_db_config.json'), 'utf-8')
         );
         let dbUri = `mongodb://${user}:${password}@${host}:${port}/${name}`;
         mongoose.connect(dbUri);

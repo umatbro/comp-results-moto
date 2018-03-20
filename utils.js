@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 
 const Track = require('./models/track');
 const Contestant = require('./models/contestant');
+const projSettings = require('./settings');
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -83,8 +84,10 @@ async function randomlyAssignCompletedTracks(dbURI, maxTracksAssigned=10) {
     let updatedDocs;
     try {
         updatedDocs = await Promise.all(allUsers.map(async (user) => {
+            let tracksAssigned = gaussianRandom(-2, maxTracksAssigned);
+            tracksAssigned = tracksAssigned > 0 ? tracksAssigned : 0;
             let query = Track.aggregate([
-                {'$sample': {size: Math.floor(Math.random() * maxTracksAssigned)}},
+                {'$sample': {size: tracksAssigned}},
                 {'$project': {'_id': 0, 'id': '$_id'}}
             ]);
             let tracksIds;
@@ -136,13 +139,71 @@ function exportData(cfgFile, dir) {
     console.log(`mongoimport --uri ${uri} --file ${dir}/tracks.json --collection tracks`);
 }
 
+/**
+ * Credits: https://stackoverflow.com/a/39187274/7301831
+ * @param start of range
+ * @param end of a range
+ * @returns {number} random number in normal distribution
+ */
+function gaussianRandom(start, end) {
+    function gaussianRand() {
+        let rand = 0;
+
+        for (let i = 0; i < 6; i += 1) {
+            rand += Math.random();
+        }
+
+        return rand / 6;
+    }
+
+    return Math.floor(start + gaussianRand() * (end - start + 1));
+}
+
+/**
+ * Construct uri for connections with db in following format:
+ * mongodb://<dbuser>:<dbpassword>@<dbhost>:<port>/<dbname>
+ *
+ * @param settings
+ */
+function constructMongoUri(settings) {
+    // helper function
+    function checkProp(propertyName) { // check if property is in object, else throw error
+        if (!settings[propertyName]) {
+            throw new Error(`No ${propertyName} found in settings (field required`)
+        }
+        return settings[propertyName];
+    }
+    let user = checkProp('user');
+    let password = checkProp('password');
+    let host = checkProp('host');
+    let port = settings.port || 27017;
+    let dbName = checkProp('name');
+
+    return `mongodb://${user}:${password}@${host}:${port}/${dbName}`;
+}
+
+/**
+ * Get project's mongo uri. First search for config file, if not found
+ * return uri for local database
+ */
+function getProjectMongoUri() {
+    let cfgFilePath = path.join(projSettings.CONFIG_DIR, 'db_config.json');
+    if (fs.existsSync(cfgFilePath)) {
+        let settings = JSON.parse(fs.readFileSync(cfgFilePath));
+        return constructMongoUri(settings);
+    }
+    return `mongodb://localhost/${projSettings.PROJECT_NAME}`;
+}
+
 module.exports = {
     generateRandomUsers: loadRandomUsers,
-    generateRandomTracks: generateRandomTracks,
+    generateRandomTracks,
     assignTracks: randomlyAssignCompletedTracks,
-    clearDb: clearDb,
-    dumpData: dumpData,
-    exportData: exportData,
+    clearDb,
+    dumpData,
+    exportData,
+    constructMongoUri,
+    getProjectMongoUri,
 };
 
 if (!module.parent) {
