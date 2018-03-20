@@ -53,4 +53,20 @@ describe('Database queries', () => {
         })
         .catch((err) => done(err));
     });
+
+    it('should display return ranking (sorted array with name, id and score)', (done) => {
+      let expectedRanking = [
+        {"id":ObjectID("5aaee166ce191527cc668f82"),"name":"Asta Larsen","score":208},
+        {"id":ObjectID("5aaee166ce191527cc668f83"),"name":"Quinn Johnson","score":132},
+        {"id":ObjectID("5aaee166ce191527cc668f84"),"name":"Ben Holt","score":40},
+        {"id":ObjectID("5aaee166ce191527cc668f85"),"name":"Vincent Gill","score":0},
+      ];
+
+      let ranking = q.getRanking()
+        .then((ranking) => {
+          expect(ranking).to.deep.equal(expectedRanking);
+          done();
+        })
+        .catch((err) => done(err));
+    });
 });
