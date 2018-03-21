@@ -3,14 +3,16 @@ extends layout
 block content
   h1= title
 
-  table#ranking
+  table#ranking.w3-table
     thead
       tr
         th Rank
         th Name
         th Points
+        th actions
     each entry, index in ranking
       tr
         td= index+1
         td= entry.name
         td= entry.score
+        td
