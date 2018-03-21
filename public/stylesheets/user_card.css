@@ -1,0 +1,7 @@
+#user-card
+{
+    display: none;
+    text-align: center;
+    padding: 10px;
+    transition: all 0s, opacity 0.5s linear;
+}

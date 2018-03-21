@@ -1,7 +1,10 @@
 extends layout
 
+block navbar
+  include componnents/user_card
+
 block content
-  h1.upper.spread= title
+  h1= title
 
   table#ranking.w3-table.w3-bordered
     thead
@@ -11,8 +14,12 @@ block content
         th Points
         //th actions
     each entry, index in ranking
-      tr(data-user-id=entry.id)
+      tr(data-user-id=entry.id).w3-hover-amber
         td= index+1
         td= entry.name
         td= entry.score
 
+
+block scripts
+  script(src='js/content_setters.js')
+  script(src='js/main.js')
