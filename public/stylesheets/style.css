@@ -1,10 +1,38 @@
 body
 {
-  padding: 50px;
+  /*padding: 0;*/
+  /*margin: 0;*/
   font: 14px 'Lato', "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+nav>a>i
+{
+  margin-right: 1em;
 }
 
 a
 {
   color: #00B7FF;
+}
+
+.upper
+{
+  text-transform: uppercase;
+}
+
+.spread
+{
+  letter-spacing: 0.5em;
+}
+
+
+#sidebar
+{
+  margin: 0;
+  width: 320px;
+}
+
+#content
+{
+  margin-left: 340px;
 }

@@ -4,9 +4,20 @@ html
     title= title
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Lato')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/w3.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
     block scripts
 
   body
-    block content
+    nav#sidebar.w3-sidebar.w3-bar-block.w3-card
+      a.w3-bar-item.w3-button.w3-large(href='/')
+        i.fa.fa-home
+        .
+          Home
+      a.w3-bar-item.w3-button.w3-large(href='https://github.com/umatbro/comp-results-moto/' target='_blank')
+        i.fa.fa-github
+        .
+          GitHub
+    #content
+      block content

@@ -1,18 +1,18 @@
 extends layout
 
 block content
-  h1= title
+  h1.upper.spread= title
 
-  table#ranking.w3-table
+  table#ranking.w3-table.w3-bordered
     thead
       tr
         th Rank
         th Name
         th Points
-        th actions
+        //th actions
     each entry, index in ranking
-      tr
+      tr(data-user-id=entry.id)
         td= index+1
         td= entry.name
         td= entry.score
-        td
+
