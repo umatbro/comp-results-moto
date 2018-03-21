@@ -33,7 +33,7 @@ exports.findTracks = function(req, res) {
                 res.json({page, tracks});
             })
             .catch((err) => {
-                res.json(err);
+                res.status(500).json(err);
             });
     } else {
         let q = {};
@@ -45,7 +45,7 @@ exports.findTracks = function(req, res) {
                 res.json({page, tracks});
             })
             .catch((err) => {
-                res.json(err);
+                res.status(500).json(err);
             });
     }
 };
@@ -59,7 +59,7 @@ exports.modifyTrack = function(req, res) {
         track.set(newValues);
         track.save()
             .then((newTrack) => res.json(newTrack))
-            .catch((err) => res.json(err));
+            .catch((err) => res.status(500).json(err));
     });
 };
 

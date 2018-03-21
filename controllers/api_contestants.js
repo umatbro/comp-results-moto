@@ -6,9 +6,10 @@ exports.findContestants = async function(req, res) {
     if (contestantId) {
         try {
             let contestant = await Contestant.findById(contestantId).populate('completedTracks').exec();
+            if (!contestant) return res.status(404).json({message: 'User not found'});
             return res.json(contestant);
         } catch (err) {
-            return res.status(404).json(err);
+            return res.status(500).json(err);
         }
     }
     // if no id in query - list all (or everything that was queried
@@ -30,7 +31,7 @@ exports.findContestants = async function(req, res) {
 exports.addContestant = function(req, res) {
     Contestant.create(req.body)
         .then((contestant) => res.json(contestant))
-        .catch((err) => res.json(err));
+        .catch((err) => res.status(500).json(err));
 };
 
 /**
@@ -49,11 +50,11 @@ exports.modifyContestantName = function(req, res) {
         .exec()
         .then((contestant) => {
             contestant.name = name;
-            contestant.save()
+            contestant.save().exec()
                 .then((newContestant) => res.json(newContestant))
                 .catch((err) => res.json(err));
         })
-        .catch((err) => res.json(err));
+        .catch((err) => res.status(500).json(err));
 };
 
 /**
@@ -82,7 +83,7 @@ exports.disqualifyUser = async function(req, res) {
       }
       Contestant.findByIdAndUpdate(id, {disqualified: false}).exec()
         .then((foundContestant) => res.json(foundContestant))
-        .catch((err) => res.json(err));
+        .catch((err) => res.status(500).json(err));
 };
 
 /**
@@ -97,7 +98,7 @@ exports.deleteUser = function(req, res) {
   let id = req.params.id;
   Contestant.findByIdAndRemove(id).exec()
     .then((removedContestant) => res.json(removedContestant))
-    .catch((err) => res.json(err));
+    .catch((err) => res.status(500).json(err));
 };
 
 /**
@@ -115,15 +116,15 @@ exports.completedTrack = async function(req, res) {
     let contestant;
     try {
         contestant = await Contestant.findById(userId);
+        if (!contestant) return res.status(404).json({message: 'Not found'})
     } catch (err) {
-        return res.status(404).json(err);
+        return res.status(500).json(err);
     }
-
     contestant.completedTracks.push(trackId);
     try {
         return res.json(await contestant.save());
     } catch (err) {
-        return res.json(err);
+        return res.status(500).json(err);
     }
 };
 
@@ -142,5 +143,5 @@ exports.removeCompletedTrack = function(req, res) {
 exports.userRanking = function(req, res) {
     q.getRanking()
         .then((ranking) => res.json(ranking))
-        .catch((err) => res.json(err));
+        .catch((err) => res.status(500).json(err));
 };
