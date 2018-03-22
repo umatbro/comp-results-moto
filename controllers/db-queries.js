@@ -1,3 +1,5 @@
+const ObjectID = require('mongoose').Types.ObjectId;
+
 const Contestant = require('../models/contestant');
 const Track = require('../models/track');
 
@@ -41,7 +43,7 @@ function getRanking(callback) {
   ]).exec(callback);
 }
 
-async function getAllUsers(callback) {
+function getAllUsers(callback) {
   return Contestant.aggregate([
     {'$match': {disqualified: false}},
     {'$lookup': {
@@ -60,9 +62,44 @@ async function getAllUsers(callback) {
   ]).exec(callback);
 }
 
+async function getSingleUserDetails(userId, callback) {
+    try {
+        let user = await Contestant.aggregate([
+            {$match: {_id: ObjectID(userId)}},
+            {
+                $lookup: {
+                    from: 'tracks',
+                    localField: 'completedTracks',
+                    foreignField: '_id',
+                    as: 'completedTracks'
+                }
+            },
+            {
+                $addFields: {
+                    id: '$_id',
+                    score: {$sum: '$completedTracks.points'}
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    'completedTracks.dateAdded': 0,
+                    'completedTracks.__v': 0,
+                    __v: 0,
+                }
+            }
+        ]).exec(callback);
+
+        return user[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
 
 module.exports = {
     getTrackNames,
     getRanking,
     getAllUsers,
+    getSingleUserDetails,
 };

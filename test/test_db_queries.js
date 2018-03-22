@@ -40,10 +40,10 @@ describe('Database queries', () => {
 
     it('should list all contestants (skipping disqualified)', (done) => {
       let expectedContestants = [
-        {"id":ObjectID("5aaee166ce191527cc668f82"),"name":"Asta Larsen","score":208,"completedTracks":[ObjectID("5aaed9482ab3da209c4e6adb"),ObjectID("5aaed9482ab3da209c4e6ada"),ObjectID("5aaed9482ab3da209c4e6add")]},
-        {"id":ObjectID("5aaee166ce191527cc668f83"),"name":"Quinn Johnson","score":132,"completedTracks":[ObjectID("5aaed9482ab3da209c4e6ad9"),ObjectID("5aaed9482ab3da209c4e6add")]},
-        {"id":ObjectID("5aaee166ce191527cc668f84"),"name":"Ben Holt","score":40,"completedTracks":[ObjectID("5aaed9482ab3da209c4e6ada")]},
-        {"id":ObjectID("5aaee166ce191527cc668f85"),"name":"Vincent Gill","score":0,"completedTracks":[]},
+        {'id': ObjectID('5aaee166ce191527cc668f82'), 'name': 'Asta Larsen', 'score': 208, 'completedTracks': [ObjectID('5aaed9482ab3da209c4e6adb'), ObjectID('5aaed9482ab3da209c4e6ada'), ObjectID('5aaed9482ab3da209c4e6add')]},
+        {'id': ObjectID('5aaee166ce191527cc668f83'), 'name': 'Quinn Johnson', 'score': 132, 'completedTracks': [ObjectID('5aaed9482ab3da209c4e6ad9'), ObjectID('5aaed9482ab3da209c4e6add')]},
+        {'id': ObjectID('5aaee166ce191527cc668f84'), 'name': 'Ben Holt', 'score': 40, 'completedTracks': [ObjectID('5aaed9482ab3da209c4e6ada')]},
+        {'id': ObjectID('5aaee166ce191527cc668f85'), 'name': 'Vincent Gill', 'score': 0, 'completedTracks': []},
       ];
 
       let allUsers = q.getAllUsers()
@@ -56,17 +56,49 @@ describe('Database queries', () => {
 
     it('should display return ranking (sorted array with name, id and score)', (done) => {
       let expectedRanking = [
-        {"id":ObjectID("5aaee166ce191527cc668f82"),"name":"Asta Larsen","score":208},
-        {"id":ObjectID("5aaee166ce191527cc668f83"),"name":"Quinn Johnson","score":132},
-        {"id":ObjectID("5aaee166ce191527cc668f84"),"name":"Ben Holt","score":40},
-        {"id":ObjectID("5aaee166ce191527cc668f85"),"name":"Vincent Gill","score":0},
+        {'id': ObjectID('5aaee166ce191527cc668f82'), 'name': 'Asta Larsen', 'score': 208},
+        {'id': ObjectID('5aaee166ce191527cc668f83'), 'name': 'Quinn Johnson', 'score': 132},
+        {'id': ObjectID('5aaee166ce191527cc668f84'), 'name': 'Ben Holt', 'score': 40},
+        {'id': ObjectID('5aaee166ce191527cc668f85'), 'name': 'Vincent Gill', 'score': 0},
       ];
 
-      let ranking = q.getRanking()
+      q.getRanking()
         .then((ranking) => {
           expect(ranking).to.deep.equal(expectedRanking);
           done();
         })
         .catch((err) => done(err));
+    });
+
+    it('should get single user details', (done) => {
+        let queriedId = '5aaee166ce191527cc668f84';
+        let expectedUser = {
+            id: ObjectID('5aaee166ce191527cc668f84'),
+            name: 'Ben Holt',
+            disqualified: false,
+            completedTracks: [
+                {
+                    _id: ObjectID('5aaed9482ab3da209c4e6ada'),
+                    name: 'Ooststellingwerf',
+                    length: 3290,
+                    points: 40,
+                },
+            ],
+            score: 40,
+        };
+
+        q.getSingleUserDetails(queriedId)
+            .then((user) => {
+                expect(user).to.deep.equal(expectedUser);
+                done();
+            })
+            .catch((err) => done(err));
+    });
+
+    it('should throw an error when wrong id given', (done) => {
+        let badId = '123';
+        q.getSingleUserDetails(badId)
+            .then((cause) => done(`I should've not reached here. ${cause}`))
+            .catch((err) => done());
     });
 });
