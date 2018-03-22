@@ -13,6 +13,7 @@ function displayUserDetails(userData) {
     let nameHeader = USER_CARD.querySelector('.name');
     let scoreHeader = USER_CARD.querySelector('.score');
     let trackTable = USER_CARD.querySelector('table');
+    let editLink = USER_CARD.querySelector('.edit-link');
 
     if (!completedTracks) trackTable.style.display = 'none';
     else trackTable.style.display = 'inline-block';
@@ -23,6 +24,7 @@ function displayUserDetails(userData) {
     }
     nameHeader.textContent = name;
     scoreHeader.textContent = score;
+    editLink.setAttribute('href', `/user/${userData.id}/edit`);
 
     completedTracks.forEach((track) => {
         let row = trackTable.insertRow();

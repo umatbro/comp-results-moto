@@ -5,3 +5,15 @@
     padding: 10px;
     transition: all 0s, opacity 0.5s linear;
 }
+
+.edit-link
+{
+  color: inherit;
+  text-decoration: none;
+}
+
+.edit-link:hover
+{
+  color: #ffbf00;
+  text-decoration: underline;
+}
