@@ -32,9 +32,16 @@ block content
           li.w3-hover-border-blue-gray.c-pointer
             i.fa.fa-plus
             span  add new track
-          li.w3-hover-border-red.c-pointer
-            i.fa.fa-ban
-            span  disqualify
+
+          li#disqualify.w3-hover-border-red.c-pointer
+
+            if user.disqualified
+              i.fa.fa-gavel
+              span  remove disqualification
+            else
+              i.fa.fa-ban
+              span  disqualify
+
           li#save-edit.w3-hover-green.c-pointer
             i.fa.fa-save.w3-left-align
             span  save info

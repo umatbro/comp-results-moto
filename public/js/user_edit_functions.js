@@ -10,12 +10,26 @@ const REQ_HEADERS = {
 function submitForm() {
     let name = EDIT_FORM.name.value;
     if (!name) return displayError('You have to provide a name!');
-    fetch(`/api/users/${USER_ID}/name`,
-    {
-        method: 'PUT',
-        headers: REQ_HEADERS,
-        body: JSON.stringify({name}),
-    }).then((res) => location.reload())
+    fetch(
+        `/api/users/${USER_ID}/name`,
+        {
+            method: 'PUT',
+            headers: REQ_HEADERS,
+            body: JSON.stringify({name}),
+        }).then((res) => location.reload())
+        .catch((err) => displayError(err.message));
+}
+
+function disqualifyUser(event) {
+    let shouldBeDisqualified =
+        document.querySelector('#disqualify>i').classList.contains('fa-ban');
+    fetch(
+        `/api/users/${USER_ID}/disqualify`,
+        {
+            method: 'PUT',
+            headers: REQ_HEADERS,
+            body: JSON.stringify({disqualified: shouldBeDisqualified})
+        }).then((res) => location.reload())
         .catch((err) => displayError(err.message));
 }
 

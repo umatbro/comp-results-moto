@@ -70,7 +70,10 @@ exports.modifyContestantName = function(req, res) {
 exports.disqualifyUser = async function(req, res) {
     const id = req.params.id;
     const shouldBeDisqualified = // no body or set `disqualified` explicitly in body
-        (!req.body.disqualified || req.body.disqualified === 'true');
+        (!req.body.hasOwnProperty('disqualified')
+            || req.body.disqualified === true
+            || req.body.disqualified === 'true'
+        );
 
       if (shouldBeDisqualified) {
         try {
