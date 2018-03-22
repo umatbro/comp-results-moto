@@ -1,5 +1,5 @@
 const Contestant = require('../models/contestant');
-const q = require('./db-queer');
+const q = require('./db-queries');
 
 exports.findContestants = async function(req, res) {
     let contestantId = req.params.id;

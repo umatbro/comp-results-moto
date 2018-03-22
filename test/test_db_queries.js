@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const ObjectID = require('mongodb').ObjectID;
 
 const Contestant = require('../models/contestant');
-const q = require('../controllers/db-queer');
+const q = require('../controllers/db-queries');
 const settings = require('../settings');
 const utils = require('../utils');
 

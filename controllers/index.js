@@ -1,4 +1,4 @@
-const q = require('../controllers/db-queer');
+const q = require('./db-queries');
 
 exports.index = function(req, res) {
     q.getRanking()
