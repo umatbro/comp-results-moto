@@ -3,7 +3,35 @@ extends layout
 block title
   title Edit user
 
-block content  
+block content
+  .full-vh.w3-display-container
+    .w3-display-middle.w3-center
+      form#edit-form
+        input.w3-input.w3-border.w3-theme-l4.w3-center.w3-xlarge(type='text' value=`${user.name}` placeholder='name' name='name')
+
+        ul.w3-ul.w3-border
+          li.w3-display-container
+            h3.w3-left-align
+              span score
+              span.w3-display-right.w3-container= user.score
+          li.w3-theme-l5 Completed tracks
+          each track in user.completedTracks
+            li.w3-left-align.w3-display-container
+              span.w3-tooltip= `${track.name} `
+                span.w3-text.w3-text-amber= `${track.length} m, ${track.points} points`
+
+              span.w3-button.w3-display-right.delete-track.w3-hover-red(data-track-id=`${track._id}`)
+                i.fa.fa-trash-o
+          li.w3-hover-border-blue-gray.c-pointer
+            i.fa.fa-plus
+            span  add new track
+          li.w3-hover-border-red.c-pointer
+            i.fa.fa-ban
+            span  disqualify
+          li.w3-hover-green.c-pointer(onclick='document.querySelector(\'#edit-form\').submit();')
+            i.fa.fa-save.w3-left-align
+            span  save info
+
 
 block styles
   link(rel='stylesheet', href='/stylesheets/user_edit.css')
