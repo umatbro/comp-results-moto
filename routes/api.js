@@ -15,5 +15,6 @@ router.put('/users/:id/name', apiContestant.modifyContestantName);
 router.put('/users/:id/disqualify', apiContestant.disqualifyUser);
 router.delete('/users/:id/delete', apiContestant.deleteUser);
 router.put('/users/:id/add-track', apiContestant.completedTrack);
+router.put('/users/:id/remove-track', apiContestant.removeCompletedTrack);
 
 module.exports = router;

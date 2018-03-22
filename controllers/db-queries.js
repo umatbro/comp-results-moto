@@ -96,10 +96,32 @@ async function getSingleUserDetails(userId, callback) {
     }
 }
 
+/**
+ * Delete track from user.
+ *
+ * @param userId
+ * @param trackToDeleteIndex
+ * @returns {Promise<Promise|*|RegExpExecArray>}
+ */
+async function deleteTrackFromUser(userId, trackToDeleteIndex, callback) {
+    let user;
+    try {
+        user = await Contestant.findById(userId).exec();
+    } catch (err) {
+        throw err;
+    }
+    user.completedTracks.splice(trackToDeleteIndex, 1);
+    try {
+        return await user.save(callback);
+    } catch (err) {
+        throw err;
+    }
+}
 
 module.exports = {
     getTrackNames,
     getRanking,
     getAllUsers,
     getSingleUserDetails,
+    deleteTrackFromUser,
 };

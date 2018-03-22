@@ -213,7 +213,7 @@ describe('Contestant controller', () => {
 
         this.execStub.resolves(contestant);
         this.req.params.id = userId;
-        this.req.body.track_id = trackId;
+        this.req.body.id = trackId;
         sinon.spy(contestant.completedTracks, 'push');
         sinon.stub(contestant, 'save');
 

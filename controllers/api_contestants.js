@@ -1,5 +1,6 @@
 const Contestant = require('../models/contestant');
 const q = require('./db-queries');
+const Track = require('../models/track');
 
 exports.findContestants = async function(req, res) {
     let contestantId = req.params.id;
@@ -114,25 +115,38 @@ exports.deleteUser = function(req, res) {
  */
 exports.completedTrack = async function(req, res) {
     let userId = req.params.id;
-    let trackId = req.body.track_id;
+    let trackId = req.body.id;
 
     let contestant;
     try {
         contestant = await Contestant.findById(userId);
         if (!contestant) return res.status(404).json({message: 'Not found'})
     } catch (err) {
-        return res.status(500).json(err);
+        console.log(1);
+        throw res.status(500).json(err);
     }
-    contestant.completedTracks.push(trackId);
+    let track;
+    try {
+        track = await Track.findById(trackId).exec();
+    } catch (err) {
+        throw res.status(404).json(err);
+    }
+    contestant.completedTracks.push(track._id);
     try {
         return res.json(await contestant.save());
     } catch (err) {
-        return res.status(500).json(err);
+        console.log(2);
+        throw res.status(500).json(err);
     }
 };
 
 exports.removeCompletedTrack = function(req, res) {
-
+    q.deleteTrackFromUser(req.params.id, req.body.index)
+        .then((updatedUser) => res.json(updatedUser))
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err)
+        });
 };
 
 /**
