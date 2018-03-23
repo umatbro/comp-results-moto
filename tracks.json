@@ -1,0 +1,30 @@
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cf9"},"name":"Bowral","length":9873,"points":85,"dateAdded":{"$date":"2018-03-20T20:17:48.624Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cfa"},"name":"Stoke-on-trent","length":586,"points":6,"dateAdded":{"$date":"2018-03-20T20:17:48.627Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cfb"},"name":"Bitlis","length":9730,"points":127,"dateAdded":{"$date":"2018-03-20T20:17:48.627Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cfc"},"name":"Reims","length":5861,"points":37,"dateAdded":{"$date":"2018-03-20T20:17:48.628Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cfd"},"name":"Longford","length":6883,"points":68,"dateAdded":{"$date":"2018-03-20T20:17:48.628Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cfe"},"name":"Kempele","length":6981,"points":69,"dateAdded":{"$date":"2018-03-20T20:17:48.628Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595cff"},"name":"New plymouth","length":1006,"points":5,"dateAdded":{"$date":"2018-03-20T20:17:48.628Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d00"},"name":"Uruguaiana","length":9245,"points":56,"dateAdded":{"$date":"2018-03-20T20:17:48.628Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d01"},"name":"Solingen","length":2814,"points":15,"dateAdded":{"$date":"2018-03-20T20:17:48.628Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d02"},"name":"Karaman","length":6388,"points":94,"dateAdded":{"$date":"2018-03-20T20:17:48.629Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d03"},"name":"Enniscorthy","length":4010,"points":57,"dateAdded":{"$date":"2018-03-20T20:17:48.629Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d04"},"name":"Iğdır","length":3896,"points":22,"dateAdded":{"$date":"2018-03-20T20:17:48.629Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d05"},"name":"Savonlinna","length":3461,"points":31,"dateAdded":{"$date":"2018-03-20T20:17:48.629Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d06"},"name":"Nykøbing sj.","length":4412,"points":38,"dateAdded":{"$date":"2018-03-20T20:17:48.629Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d07"},"name":"Darwin","length":9652,"points":48,"dateAdded":{"$date":"2018-03-20T20:17:48.629Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d08"},"name":"Pozuelo de alarcón","length":5902,"points":81,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d09"},"name":"Glasgow","length":6252,"points":38,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d0a"},"name":"Mullingar","length":5323,"points":61,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d0b"},"name":"Torrejón de ardoz","length":5997,"points":89,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d0c"},"name":"Pouso alegre","length":7218,"points":42,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d0d"},"name":"Wolverhampton","length":2021,"points":17,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d0e"},"name":"Omaha","length":8999,"points":92,"dateAdded":{"$date":"2018-03-20T20:17:48.630Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d0f"},"name":"Lully vd","length":4786,"points":49,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d10"},"name":"Lusk","length":1930,"points":14,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d11"},"name":"Carrickmacross","length":1732,"points":15,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d12"},"name":"کاشان","length":2626,"points":23,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d13"},"name":"قدس","length":1834,"points":21,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d14"},"name":"Aarhus n","length":8988,"points":66,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d15"},"name":"Ordu","length":1351,"points":7,"dateAdded":{"$date":"2018-03-20T20:17:48.631Z"},"__v":0}
+{"_id":{"$oid":"5ab16c6cf65bd0578b595d16"},"name":"Gisborne","length":2980,"points":39,"dateAdded":{"$date":"2018-03-20T20:17:48.632Z"},"__v":0}

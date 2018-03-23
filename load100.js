@@ -16,7 +16,7 @@ let uri = load100.getProjectMongoUri();
 // .catch(err => console.log(err));
 
 
-load100.exportData('./config/db_config.json', './');
+load100.dumpData('./config/db_config.json', '.');
 //
 // mongoose.connect(uri);
 //
