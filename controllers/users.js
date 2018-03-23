@@ -1,8 +1,10 @@
 const q = require('../controllers/db-queries');
 
 exports.editUserController = async function(req, res) {
+  let user = await q.getSingleUserDetails(req.params.id);
+  console.log(user.completedTracks);
   return res.render(
     'user_edit',
-    {user: await q.getSingleUserDetails(req.params.id)}
+    {user: user}
   );
 };

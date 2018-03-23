@@ -100,18 +100,23 @@ async function getSingleUserDetails(userId, callback) {
  * Delete track from user.
  *
  * @param userId
- * @param trackToDeleteIndex
+ * @param trackId
  * @returns {Promise<Promise|*|RegExpExecArray>}
  */
-async function deleteTrackFromUser(userId, trackToDeleteIndex, callback) {
+async function deleteTrackFromUser(userId, trackId, callback) {
+    if (!trackId) {
+        throw new Error('Provide index to drop');
+    }
     let user;
     try {
         user = await Contestant.findById(userId).exec();
     } catch (err) {
         throw err;
     }
-    user.completedTracks.splice(trackToDeleteIndex, 1);
+    // user.completedTracks.splice(parseInt(trackId), 1);
+    console.log(user);
     try {
+        return await user.update({$pull: {completedTracks: trackId}}).exec();
         return await user.save(callback);
     } catch (err) {
         throw err;

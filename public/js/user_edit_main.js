@@ -1,9 +1,3 @@
-
-
-function deleteTrack(event) {
-    console.log(event.target.dataset.trackId);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log(`User id:`, USER_ID);
 

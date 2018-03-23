@@ -33,6 +33,20 @@ function disqualifyUser(event) {
         .catch((err) => displayError(err.message));
 }
 
+
+function deleteTrack(event) {
+    console.log('deletin');
+    let trackId = event.target.dataset.trackId;
+    fetch(
+        `/api/users/${USER_ID}/remove-track`,
+        {
+            method: 'PUT',
+            headers: REQ_HEADERS,
+            body: JSON.stringify({id: trackId}),
+        }).then((user) => location.reload())
+        .catch((err) => displayError(err.message));
+}
+
 function displayError(errMsg) {
     ERROR_PANEL.style.display = 'block';
     ERROR_PANEL.querySelector('#error-text').textContent = errMsg;

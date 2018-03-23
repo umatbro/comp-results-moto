@@ -122,7 +122,6 @@ exports.completedTrack = async function(req, res) {
         contestant = await Contestant.findById(userId);
         if (!contestant) return res.status(404).json({message: 'Not found'})
     } catch (err) {
-        console.log(1);
         throw res.status(500).json(err);
     }
     let track;
@@ -135,13 +134,12 @@ exports.completedTrack = async function(req, res) {
     try {
         return res.json(await contestant.save());
     } catch (err) {
-        console.log(2);
         throw res.status(500).json(err);
     }
 };
 
 exports.removeCompletedTrack = function(req, res) {
-    q.deleteTrackFromUser(req.params.id, req.body.index)
+    q.deleteTrackFromUser(req.params.id, req.body.id)
         .then((updatedUser) => res.json(updatedUser))
         .catch((err) => {
             console.log(err);
