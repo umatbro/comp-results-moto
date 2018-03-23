@@ -14,7 +14,8 @@
 | PUT    | `/api/users[id]/name `       | Modify user name. Requires 'name' parameter in request body.                                  |
 | PUT    | `/api/users/[id]/disqualify` | Disqualify user. Body can be empty or contain disqualified=false to remove disqualification.  |
 | PUT    | `/api/users/[id]/add-track`  | Assign new completed track to a user. Track id must be present in request body.               |
-| DELETE | `/api/users/[id]/delete`     | Delete user from database.      
+| PUT    | `/api/users/[id]/remove-track`| Remove track from user's achievements. Track id must be present in request body.
+| DELETE | `/api/users/[id]/delete`     | Delete user from database.
 
 
 ### Tracks 
