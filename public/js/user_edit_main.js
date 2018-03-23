@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
         trashElem.addEventListener('click', deleteTrack);
     });
 
+    // open modal
+    document.querySelector('#add-track').addEventListener('click', showModal);
+    document.querySelector('#modal-close').addEventListener('click', hideModal);
     // add new track
 
 

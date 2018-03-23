@@ -4,6 +4,8 @@ block title
   title Edit user
 
 block content
+  include componnents/user_edit_track_select_modal
+
   #error-panel.w3-panel.w3-red.w3-display-container.w3-padding(style='display: none')
     h3 Error
     span#error-text.w3-margin-bottom
@@ -29,7 +31,7 @@ block content
 
               span.w3-button.w3-display-right.delete-track.w3-hover-red(data-track-id=`${track._id}`)
                 i.fa.fa-trash-o(data-track-id=`${track._id}`)
-          li.w3-hover-border-blue-gray.c-pointer
+          li#add-track.w3-hover-border-blue-gray.c-pointer
             i.fa.fa-plus
             span  add new track
 
