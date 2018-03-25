@@ -1,5 +1,34 @@
 # Competition results
 
+## Project setup
+
+To run project run those commands:
+
+```
+git clone https://github.com/umatbro/comp-results-moto.git
+npm install
+npm start
+```
+
+This will start server on ```localhost:3000```.
+
+### Local database
+
+If you want to run your local database, run MongoDB server:
+
+```
+./run_db.sh
+```
+
+This will create `data` directory and run MongoDB database.
+
+Then, in another terminal, start the server that will use local database:
+
+```
+LOCAL_DB=1 npm start
+```
+
+**NOTE** - you have to have [MongoDB installed](https://docs.mongodb.com/manual/installation/#mongodb-community-edition) for it to work.
 
 ## API 
 

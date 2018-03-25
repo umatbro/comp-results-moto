@@ -181,16 +181,22 @@ function constructMongoUri(settings) {
 }
 
 /**
- * Get project's mongo uri. First search for config file, if not found
- * return uri for local database
+ * Get project's mongo URI. 
+ * First, check if LOCAL_DB eniromental variable is set to '1'.
+ * Then try to search for config file, if found, use configuration
+ * stored in that file.
+ * 
+ * @return database URI as a string (example: mongodb://localhost/comp-results)
  */
 function getProjectMongoUri() {
+    let env = process.env;
+    let shouldDbBeLocal = env.hasOwnProperty('LOCAL_DB') && env.LOCAL_DB === '1' ? true : false;
     let cfgFilePath = path.join(projSettings.CONFIG_DIR, 'db_config.json');
-    if (fs.existsSync(cfgFilePath)) {
-        let settings = JSON.parse(fs.readFileSync(cfgFilePath));
-        return constructMongoUri(settings);
+    if (!fs.existsSync(cfgFilePath) || shouldDbBeLocal) {
+        return `mongodb://localhost/${projSettings.PROJECT_NAME}`;
     }
-    return `mongodb://localhost/${projSettings.PROJECT_NAME}`;
+    let settings = JSON.parse(fs.readFileSync(cfgFilePath));
+    return constructMongoUri(settings);
 }
 
 module.exports = {
