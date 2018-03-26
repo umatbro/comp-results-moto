@@ -123,10 +123,15 @@ async function deleteTrackFromUser(userId, trackId, callback) {
     }
 }
 
+function getDisqualifiedUsers(callback) {
+    return Contestant.aggregate().exec(callback);
+}
+
 module.exports = {
     getTrackNames,
     getRanking,
     getAllUsers,
     getSingleUserDetails,
     deleteTrackFromUser,
+    getDisqualifiedUsers,
 };

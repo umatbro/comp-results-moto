@@ -54,7 +54,7 @@ describe('Database queries', () => {
         .catch((err) => done(err));
     });
 
-    it('should display return ranking (sorted array with name, id and score)', (done) => {
+    it('should return ranking (sorted array with name, id and score)', (done) => {
       let expectedRanking = [
         {'id': ObjectID('5aaee166ce191527cc668f82'), 'name': 'Asta Larsen', 'score': 208},
         {'id': ObjectID('5aaee166ce191527cc668f83'), 'name': 'Quinn Johnson', 'score': 132},
@@ -100,5 +100,26 @@ describe('Database queries', () => {
         q.getSingleUserDetails(badId)
             .then((cause) => done(`I should've not reached here. ${cause}`))
             .catch((err) => done());
+    });
+
+    it('should return list of disqualified users', (done) => {
+        let expectedUsers = [
+            {
+                'id': ObjectID('5aaee166ce191527cc668f86'),
+                'name': 'Jane Ortiz',
+                'disqualified': true,
+                'completedTracks': [
+                    ObjectID('5aaed9482ab3da209c4e6add'),
+                    ObjectID('5aaed9482ab3da209c4e6adb'),
+                    ObjectID('5aaed9482ab3da209c4e6ad9'),
+                ],
+                'score': 30,
+            }
+        ];
+        q.getDisqualifiedUsers()
+            .then((users) => {
+                expect(users).to.have.deep.members(expectedUsers);
+                done();
+            }).catch((err) => done(err));
     });
 });
