@@ -113,8 +113,8 @@ describe('Database queries', () => {
                     ObjectID('5aaed9482ab3da209c4e6adb'),
                     ObjectID('5aaed9482ab3da209c4e6ad9'),
                 ],
-                'score': 30,
-            }
+                'score': 209,
+            },
         ];
         q.getDisqualifiedUsers()
             .then((users) => {

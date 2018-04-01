@@ -124,7 +124,22 @@ async function deleteTrackFromUser(userId, trackId, callback) {
 }
 
 function getDisqualifiedUsers(callback) {
-    return Contestant.aggregate().exec(callback);
+    return Contestant.aggregate([
+        {'$match': {disqualified: true}},
+        {'$lookup': {
+                'from': 'tracks', // name of foreign collection
+                'localField': 'completedTracks',
+                'foreignField': '_id',
+                'as': 'tracks'
+            }},
+        {
+            '$addFields': {
+                'id': '$_id',
+                'score': {'$sum': '$tracks.points'}
+            }
+        },
+        {'$project': {tracks: 0, _id: 0, __v: 0}}
+    ]).exec(callback);
 }
 
 module.exports = {

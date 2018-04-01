@@ -16,7 +16,7 @@ exports.findContestants = async function(req, res) {
     // if no id in query - list all (or everything that was queried
     if (!req.query.disqualified) req.query.disqualified = false;
     try {
-        return res.json(await q.getAllUsers());
+        return res.json(!req.query.disqualified ? await q.getAllUsers() : await q.getDisqualifiedUsers());
     } catch (err) {
         return res.status(500).json(err);
     }
