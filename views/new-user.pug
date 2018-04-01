@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .full-vh.w3-display-container
+        .w3-display-middle.w3-center
+            form#add-user-form
+                input.w3-input.w3-border.w3-theme-l1.w3-center.w3-xlarge(type='text' placeholder='name' name='name' required)
+
+                ul.w3-ul.w3-border
+                    li#add-user-confirm.w3-hover-green.c-pointer
+                        i.fa.fa-save.w3-left-align
+                        span  Add new user
+
+block styles
+    link(rel='stylesheet', href='/stylesheets/user_edit.css')
+
+block scripts
+    script(src='/js/add_user.js')

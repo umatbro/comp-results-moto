@@ -7,3 +7,7 @@ exports.editUserController = async function(req, res) {
     {user: user}
   );
 };
+
+exports.addNewUserForm = function(req, res) {
+    res.render('new-user');
+};

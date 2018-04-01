@@ -4,7 +4,7 @@ exports.index = function(req, res) {
     q.getRanking()
         .then((ranking) => {
             res.render('index', {
-                title: 'Results',
+                title: 'Ranking',
                 ranking: ranking,
             });
         }).catch((err) => res.render('error', {err}));
